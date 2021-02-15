@@ -35,9 +35,7 @@ namespace ConferenceTracker.Entities
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
-
-        public bool IsStaff { get; set; }
-
+        
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validationList = new List<ValidationResult>();
