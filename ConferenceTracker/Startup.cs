@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace ConferenceTracker
 {
@@ -35,10 +36,16 @@ namespace ConferenceTracker
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {            
-            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
-                context.Database.EnsureCreated();
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/home/error");
+            }
+            
+            using (var scope = app?.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (var context = scope?.ServiceProvider.GetService<ApplicationDbContext>())
+                context?.Database.EnsureCreated();
 
             app.UseStaticFiles();
 
